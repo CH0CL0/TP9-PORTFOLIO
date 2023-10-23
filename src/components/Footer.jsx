@@ -1,12 +1,13 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./Footer.css"; // Importa tu archivo de estilos para el footer
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-white mt-5">
+    <footer className="Footer">
       <Container>
-        <Row>
+      <Row>
           <Col md={6}>
             <h5>Contacto</h5>
             <p>Dirección: 123 Calle Principal, Ciudad, País</p>
