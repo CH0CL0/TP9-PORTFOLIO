@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons"; // Importa los iconos que necesitas
 import "./Choclias.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
-const Choclias = () => {
+const Choclias = () => { 
   const projects = [
     {
       title: "Proyecto 1",
@@ -38,6 +39,20 @@ const Choclias = () => {
 
     // Agrega más proyectos según sea necesario
   ];
+  const [favoritos, setFavoritos] = useState([]);
+  const handleAgregarFavorito = (project) => {
+    if (favoritos.includes(project)) {
+      // Si el proyecto ya está en favoritos, lo eliminamos
+      setFavoritos(favoritos.filter((item) => item !== project));
+    } else {
+      // Si no está en favoritos, lo añadimos
+      setFavoritos([...favoritos, project]);
+    }
+  };
+
+  const isFavorito = (project) => {
+    return favoritos.includes(project);
+  };
 
   return (
     <div>
@@ -56,12 +71,42 @@ const Choclias = () => {
                   <a href={project.url} target="_blank" rel="noopener noreferrer">
                     Ver Proyecto
                   </a>
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className={`star-icon ${isFavorito(project) ? "favorito" : ""}`}
+                    onClick={() => handleAgregarFavorito(project)}
+                  />
                 </Card.Body>
               </Card>
             </Col>
           ))}
         </Row>
       </Container>
+      <Container className="favoritos-container">
+      <h2>Proyectos Favoritos</h2>
+      <Row>
+        {favoritos.map((project, index) => (
+          <Col key={index} md={4}>
+            <Card className="project-card">
+              <Card.Img variant="top" src={project.imageUrl} alt={project.title} />
+              <Card.Body>
+                <Card.Title>{project.title}</Card.Title>
+                <Card.Text>{project.description}</Card.Text>
+                <p>Fecha: {project.date}</p>
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  Ver Proyecto
+                </a>
+                <FontAwesomeIcon
+                  icon={faStar}
+                  className={`star-icon ${isFavorito(project) ? "favorito" : ""}`}
+                  onClick={() => handleAgregarFavorito(project)}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
       <Footer />
     </div>
   );

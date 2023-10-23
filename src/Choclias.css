@@ -6,6 +6,7 @@
   
   .project-card {
     margin-top: 20px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 10px;
     transition: transform 0.3s ease;
@@ -13,5 +14,9 @@
   
   .project-card:hover {
     transform: scale(1.05);
+  }
+
+  .favoritos-container{
+    margin-top: 50px;
   }
   
