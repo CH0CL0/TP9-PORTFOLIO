@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +7,7 @@ import "./Choclias.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 const Choclias = () => { 
-  const projects = [
+  const proyectosIniciales = [
     {
       title: "Proyecto 1",
       description: "NASHEI",
@@ -40,25 +40,35 @@ const Choclias = () => {
     // Agrega más proyectos según sea necesario
   ];
   const [favoritos, setFavoritos] = useState([]);
+  const [projects, setProjects] = useState(proyectosIniciales);
+
+  useEffect(() => {
+    const storedFavoritos = JSON.parse(localStorage.getItem("favoritos") || "[]");
+    setFavoritos(storedFavoritos);
+  }, []); 
+
+
   const handleAgregarFavorito = (project) => {
     if (favoritos.includes(project)) {
-      // Si el proyecto ya está en favoritos, lo eliminamos
-      setFavoritos(favoritos.filter((item) => item !== project));
+      const updatedFavoritos = favoritos.filter((item) => item !== project);
+      setFavoritos(updatedFavoritos);
     } else {
-      // Si no está en favoritos, lo añadimos
-      setFavoritos([...favoritos, project]);
+      const updatedFavoritos = [...favoritos, project];
+      setFavoritos(updatedFavoritos);
     }
   };
+  useEffect(() => {
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }, [favoritos]);
 
   const isFavorito = (project) => {
     return favoritos.includes(project);
   };
-
   return (
     <div>
       <Navbar />
       <Container className="choclias-container">
-        <h1>Mis Proyectos</h1>
+        <h1 className="titulo">Mis Proyectos</h1>
         <Row>
           {projects.map((project, index) => (
             <Col key={index} md={4}>
@@ -83,7 +93,7 @@ const Choclias = () => {
         </Row>
       </Container>
       <Container className="favoritos-container">
-      <h2>Proyectos Favoritos</h2>
+      <h1 className="titulo">Proyectos Favoritos</h1>
       <Row>
         {favoritos.map((project, index) => (
           <Col key={index} md={4}>

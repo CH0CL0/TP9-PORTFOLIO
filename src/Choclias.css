@@ -3,7 +3,9 @@
 .choclias-container {
     margin-top: 50px;
   }
-  
+  .titulo{
+    text-align: center;
+  }
   .project-card {
     margin-top: 20px;
     margin-bottom: 15px;
