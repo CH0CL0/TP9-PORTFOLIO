@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {Bookmark} from "react-bootstrap-icons";
+import {BookmarkFill} from "react-bootstrap-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons"; // Importa los iconos que necesitas
 import "./Choclias.css";
 import Navbar from "./components/Navbar";
@@ -81,9 +83,41 @@ const Choclias = () => {
                   <a href={project.url} target="_blank" rel="noopener noreferrer">
                     Ver Proyecto
                   </a>
-                  <FontAwesomeIcon
-                    icon={faStar}
-                    className={`star-icon ${isFavorito(project) ? "favorito" : ""}`}
+                  {isFavorito(project) ? (
+                    <BookmarkFill
+                      fill="yellow" // Puedes ajustar el color de relleno
+                      className="star-icon favorito"
+                      onClick={() => handleAgregarFavorito(project)}
+                    />
+                  ) : (
+                    <Bookmark
+                      className="star-icon"
+                      onClick={() => handleAgregarFavorito(project)}
+                    />
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+      <Container className="favoritos-container">
+        <h1 className="titulo">Proyectos Favoritos</h1>
+        <Row>
+          {favoritos.map((project, index) => (
+            <Col key={index} md={4}>
+              <Card className="project-card">
+                <Card.Img variant="top" src={project.imageUrl} alt={project.title} />
+                <Card.Body>
+                  <Card.Title>{project.title}</Card.Title>
+                  <Card.Text>{project.description}</Card.Text>
+                  <p>Fecha: {project.date}</p>
+                  <a href={project.url} target="_blank" rel="noopener noreferrer">
+                    Ver Proyecto
+                  </a>
+                  <BookmarkFill
+                    fill="yellow" // Puedes ajustar el color de relleno
+                    className="star-icon favorito"
                     onClick={() => handleAgregarFavorito(project)}
                   />
                 </Card.Body>
@@ -92,31 +126,6 @@ const Choclias = () => {
           ))}
         </Row>
       </Container>
-      <Container className="favoritos-container">
-      <h1 className="titulo">Proyectos Favoritos</h1>
-      <Row>
-        {favoritos.map((project, index) => (
-          <Col key={index} md={4}>
-            <Card className="project-card">
-              <Card.Img variant="top" src={project.imageUrl} alt={project.title} />
-              <Card.Body>
-                <Card.Title>{project.title}</Card.Title>
-                <Card.Text>{project.description}</Card.Text>
-                <p>Fecha: {project.date}</p>
-                <a href={project.url} target="_blank" rel="noopener noreferrer">
-                  Ver Proyecto
-                </a>
-                <FontAwesomeIcon
-                  icon={faStar}
-                  className={`star-icon ${isFavorito(project) ? "favorito" : ""}`}
-                  onClick={() => handleAgregarFavorito(project)}
-                />
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
       <Footer />
     </div>
   );
