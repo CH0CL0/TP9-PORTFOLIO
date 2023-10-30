@@ -8,7 +8,9 @@ import { faStar } from "@fortawesome/free-solid-svg-icons"; // Importa los icono
 import "./Choclias.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { FavoritosContext } from '../context/favoritoscontext.jsx';
 const Choclias = () => { 
+  const {favoritos,setFavoritos} = React.useContext(FavoritosContext)
   const proyectosIniciales = [
     {
       title: "Proyecto 1",
@@ -41,7 +43,6 @@ const Choclias = () => {
 
     // Agrega más proyectos según sea necesario
   ];
-  const [favoritos, setFavoritos] = useState([]);
   const [projects, setProjects] = useState(proyectosIniciales);
 
   useEffect(() => {
@@ -54,16 +55,14 @@ const Choclias = () => {
     if (favoritos.includes(project)) {
       const updatedFavoritos = favoritos.filter((item) => item !== project);
       setFavoritos(updatedFavoritos);
+      localStorage.setItem("favoritos", JSON.stringify(favoritos));
     } else {
       const updatedFavoritos = [...favoritos, project];
       setFavoritos(updatedFavoritos);
     }
   };
-  useEffect(() => {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-  }, [favoritos]);
-
   const isFavorito = (project) => {
+    console.log(favoritos)
     return favoritos.includes(project);
   };
   return (
@@ -85,7 +84,7 @@ const Choclias = () => {
                   </a>
                   {isFavorito(project) ? (
                     <BookmarkFill
-                      fill="yellow" // Puedes ajustar el color de relleno
+                      fill="black" // Puedes ajustar el color de relleno
                       className="star-icon favorito"
                       onClick={() => handleAgregarFavorito(project)}
                     />
@@ -95,31 +94,6 @@ const Choclias = () => {
                       onClick={() => handleAgregarFavorito(project)}
                     />
                   )}
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-      <Container className="favoritos-container">
-        <h1 className="titulo">Proyectos Favoritos</h1>
-        <Row>
-          {favoritos.map((project, index) => (
-            <Col key={index} md={4}>
-              <Card className="project-card">
-                <Card.Img variant="top" src={project.imageUrl} alt={project.title} />
-                <Card.Body>
-                  <Card.Title>{project.title}</Card.Title>
-                  <Card.Text>{project.description}</Card.Text>
-                  <p>Fecha: {project.date}</p>
-                  <a href={project.url} target="_blank" rel="noopener noreferrer">
-                    Ver Proyecto
-                  </a>
-                  <BookmarkFill
-                    fill="yellow" // Puedes ajustar el color de relleno
-                    className="star-icon favorito"
-                    onClick={() => handleAgregarFavorito(project)}
-                  />
                 </Card.Body>
               </Card>
             </Col>
