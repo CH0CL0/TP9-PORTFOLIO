@@ -1,7 +1,11 @@
 import React from 'react';
+import { Badge } from "@mui/material";
 import './Inicio.css';
+import { FavoritosContext } from '../../context/favoritoscontext';
 
 const Navbar = () => {
+  const { favoritos } = React.useContext(FavoritosContext);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -21,7 +25,10 @@ const Navbar = () => {
               <a className="nav-link" href="/contacto">Contacto</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/favoritos">Favoritos</a>
+              <a className="nav-link" href="/favoritos">
+                Favoritos{" "}
+                {favoritos.length > 0 && <Badge badgeContent={favoritos.length} color="primary" />}
+              </a>
             </li>
           </ul>
         </div>

@@ -1,8 +1,12 @@
 import React from 'react';
 import './AcercaDe.css';
+import Navbar from './components/Navbar';
 
 const AcercaDe = () => {
   return (
+    <div>
+      <Navbar />
+
     <div className="acerca-de-container">
       <div className="acerca-de-header">
         <h1>Nosotros</h1>
@@ -25,6 +29,7 @@ const AcercaDe = () => {
           {/* Agrega más habilidades según sea necesario */}
         </ul>
       </div>
+    </div>
     </div>
   );
 };

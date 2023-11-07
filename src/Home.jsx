@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {Bookmark} from "react-bootstrap-icons";
-import {BookmarkFill} from "react-bootstrap-icons";
+import { Bookmark } from "react-bootstrap-icons";
+import { BookmarkFill } from "react-bootstrap-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons"; // Importa los iconos que necesitas
 import "./Choclias.css";
 import Navbar from "./components/Navbar";
@@ -11,8 +11,8 @@ import Footer from "./components/Footer";
 import { FavoritosContext } from '../context/favoritoscontext.jsx';
 import LoginForm from "./components/Login.jsx";
 
-const Choclias = () => { 
-  const {favoritos,setFavoritos} = React.useContext(FavoritosContext)
+const Choclias = () => {
+  const { favoritos, setFavoritos } = React.useContext(FavoritosContext)
   const proyectosIniciales = [
     {
       title: "Proyecto 1",
@@ -22,37 +22,40 @@ const Choclias = () => {
       url: "https://www.google.com/?hl=es&safe=active&ssui=on",
     },
     {
-        title: "Proyecto 2",
-        description: "NASHEI",
-        imageUrl: "https://marketing4ecommerce.net/wp-content/uploads/2023/01/Screenshot_2-1-1024x573.png",
-        date: "30/02/1997",
-        url: "https://www.google.com/?hl=es&safe=active&ssui=on",
-      },
-      {
-        title: "Proyecto 3",
-        description: "NASHEI",
-        imageUrl: "https://tusclicks.com/blog/wp-content/uploads/2019/10/hero-design-web.jpg",
-        date: "30/02/1997",
-        url: "https://www.google.com/?hl=es&safe=active&ssui=on",
-      },
-      {
-        title: "Proyecto 4",
-        description: "NASHEI",
-        imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk39xK56uiRJKkNYBSLPCVi2O1VeOsJsBFYA&usqp=CAU",
-        date: "30/02/1997",
-        url: "https://www.google.com/?hl=es&safe=active&ssui=on",
-      },
+      title: "Proyecto 2",
+      description: "NASHEI",
+      imageUrl: "https://marketing4ecommerce.net/wp-content/uploads/2023/01/Screenshot_2-1-1024x573.png",
+      date: "30/02/1997",
+      url: "https://www.google.com/?hl=es&safe=active&ssui=on",
+    },
+    {
+      title: "Proyecto 3",
+      description: "NASHEI",
+      imageUrl: "https://tusclicks.com/blog/wp-content/uploads/2019/10/hero-design-web.jpg",
+      date: "30/02/1997",
+      url: "https://www.google.com/?hl=es&safe=active&ssui=on",
+    },
+    {
+      title: "Proyecto 4",
+      description: "NASHEI",
+      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk39xK56uiRJKkNYBSLPCVi2O1VeOsJsBFYA&usqp=CAU",
+      date: "30/02/1997",
+      url: "https://www.google.com/?hl=es&safe=active&ssui=on",
+    },
 
     // Agrega más proyectos según sea necesario
   ];
   const [projects, setProjects] = useState(proyectosIniciales);
   const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = (email, password) => {
     setUser(email);
+    setIsLoggedIn(true);
   };
   const handleLogout = () => {
     setUser(null);
+    setIsLoggedIn(false);
   };
 
   const handleAgregarFavorito = (project) => {
@@ -64,26 +67,13 @@ const Choclias = () => {
     }
   };
 
-  // const handleAgregarFavorito = (project) => {
-  //   // Verificar si el proyecto ya está en favoritos
-  //   if (favoritos.includes(project)) {
-  //     // Si ya está en favoritos, no hacemos nada y salimos de la función
-  //     return;
-  //   }
-  
-  //   // Si el proyecto no está en favoritos, lo agregamos a la lista
-  //   const updatedFavoritos = [...favoritos, project];
-  //   setFavoritos(updatedFavoritos);
-  
-  //   // Guardar la lista de favoritos actualizada en el localStorage
-  //   localStorage.setItem("favoritos", JSON.stringify(updatedFavoritos));
-  // };
-  
+
+
 
   useEffect(() => {
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
   }, [favoritos]);
-  
+
   const isFavorito = (project) => {
     console.log(favoritos)
     return favoritos.includes(project);
@@ -124,11 +114,11 @@ const Choclias = () => {
         </Row>
       </Container>
       <div className="inicio-sesion">
-      {user ? (
-        <p className="welcome-message">Hola, {user} | <button className="logout-button" onClick={() => setUser(null)}>Cerrar Sesión</button></p>
-      ) : (
-        <LoginForm onLogin={handleLogin} />
-      )}
+        {user ? (
+          <p className="welcome-message">Hola, {user} | <button className="logout-button" onClick={() => setUser(null)}>Cerrar Sesión</button></p>
+        ) : (
+          <LoginForm onLogin={handleLogin} />
+        )}
       </div>
       <Footer />
     </div>

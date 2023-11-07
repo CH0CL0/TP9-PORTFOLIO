@@ -10,28 +10,27 @@ const Footer = () => {
       <Row>
           <Col md={6}>
             <h5>Contacto</h5>
-            <p>Dirección: 123 Calle Principal, Ciudad, País</p>
-            <p>Email: info@example.com</p>
+            <p>Mail: choclo123@gmail.com</p>
             <p>Teléfono: +123 456 7890</p>
           </Col>
           <Col md={6}>
-            <h5>Enlaces Rápidos</h5>
+            <h5>Nuestras redes</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="/">Inicio</a>
+                <a href="https://www.instagram.com/">IG DE LA MINITA</a>
               </li>
               <li>
-                <a href="/productos">Productos</a>
+                <a href="https://www.facebook.com/">CARA DEL LIBRO</a>
               </li>
               <li>
-                <a href="/contacto">Contacto</a>
+                <a href="https://www.twitter.com/">Twitter de la minita</a>
               </li>
             </ul>
           </Col>
         </Row>
       </Container>
       <div className="text-center py-3">
-        &copy; {new Date().getFullYear()} Tu Nombre o Nombre de tu Empresa
+        &copy; {new Date().getFullYear()} Alessandro Arena y Mateo Guevara
       </div>
     </footer>
   );
