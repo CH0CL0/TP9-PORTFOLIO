@@ -9,6 +9,8 @@ import "./Choclias.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { FavoritosContext } from '../context/favoritoscontext.jsx';
+import LoginForm from "./components/Login.jsx";
+
 const Choclias = () => { 
   const {favoritos,setFavoritos} = React.useContext(FavoritosContext)
   const proyectosIniciales = [
@@ -44,23 +46,44 @@ const Choclias = () => {
     // Agrega más proyectos según sea necesario
   ];
   const [projects, setProjects] = useState(proyectosIniciales);
+  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const storedFavoritos = JSON.parse(localStorage.getItem("favoritos") || "[]");
-    setFavoritos(storedFavoritos);
-  }, []); 
-
+  const handleLogin = (email, password) => {
+    setUser(email);
+  };
+  const handleLogout = () => {
+    setUser(null);
+  };
 
   const handleAgregarFavorito = (project) => {
-    if (favoritos.includes(project)) {
-      const updatedFavoritos = favoritos.filter((item) => item !== project);
-      setFavoritos(updatedFavoritos);
-      localStorage.setItem("favoritos", JSON.stringify(favoritos));
+    // Asegúrate de que el usuario esté autenticado antes de agregar a favoritos
+    if (user) {
+      setFavoritos([...favoritos, project]);
     } else {
-      const updatedFavoritos = [...favoritos, project];
-      setFavoritos(updatedFavoritos);
+      alert('Debes iniciar sesión para agregar a favoritos.');
     }
   };
+
+  // const handleAgregarFavorito = (project) => {
+  //   // Verificar si el proyecto ya está en favoritos
+  //   if (favoritos.includes(project)) {
+  //     // Si ya está en favoritos, no hacemos nada y salimos de la función
+  //     return;
+  //   }
+  
+  //   // Si el proyecto no está en favoritos, lo agregamos a la lista
+  //   const updatedFavoritos = [...favoritos, project];
+  //   setFavoritos(updatedFavoritos);
+  
+  //   // Guardar la lista de favoritos actualizada en el localStorage
+  //   localStorage.setItem("favoritos", JSON.stringify(updatedFavoritos));
+  // };
+  
+
+  useEffect(() => {
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }, [favoritos]);
+  
   const isFavorito = (project) => {
     console.log(favoritos)
     return favoritos.includes(project);
@@ -100,6 +123,13 @@ const Choclias = () => {
           ))}
         </Row>
       </Container>
+      <div className="inicio-sesion">
+      {user ? (
+        <p className="welcome-message">Hola, {user} | <button className="logout-button" onClick={() => setUser(null)}>Cerrar Sesión</button></p>
+      ) : (
+        <LoginForm onLogin={handleLogin} />
+      )}
+      </div>
       <Footer />
     </div>
   );

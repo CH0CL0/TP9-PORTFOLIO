@@ -1,0 +1,43 @@
+/* AcercaDe.css */
+
+.acerca-de-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .acerca-de-header {
+    margin-bottom: 20px;
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  .acerca-de-content {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  
+  .acerca-de-skills {
+    margin-top: 40px;
+  }
+  
+  .acerca-de-skills h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .acerca-de-skills ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .acerca-de-skills li {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  /* Personaliza los estilos según tus necesidades */
+  
