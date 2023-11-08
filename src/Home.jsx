@@ -15,32 +15,25 @@ const Choclias = () => {
   const { favoritos, setFavoritos } = React.useContext(FavoritosContext)
   const proyectosIniciales = [
     {
-      title: "Proyecto 1",
-      description: "NASHEI",
-      imageUrl: "https://www.yorokobu.es/src/uploads/2012/03/www.myownbike.jpeg",
-      date: "30/02/1997",
-      url: "https://www.google.com/?hl=es&safe=active&ssui=on",
+      title: "To do list",
+      description: "Puedes crear y sincronizar fácilmente tus listas de tareas entre varios dispositivos para tenerlas disponibles desde una computadora",
+      imageUrl: "",
+      date: "31/08/20203",
+      url: "https://github.com/CH0CL0/TODOLISTDAI",
     },
     {
-      title: "Proyecto 2",
-      description: "NASHEI",
-      imageUrl: "https://marketing4ecommerce.net/wp-content/uploads/2023/01/Screenshot_2-1-1024x573.png",
-      date: "30/02/1997",
-      url: "https://www.google.com/?hl=es&safe=active&ssui=on",
-    },
-    {
-      title: "Proyecto 3",
-      description: "NASHEI",
+      title: "Eco 1%",
+      description: "Una pagina donde puedes competir con tus amigos para quien sabe mas sobre la contaminacion",
       imageUrl: "https://tusclicks.com/blog/wp-content/uploads/2019/10/hero-design-web.jpg",
-      date: "30/02/1997",
-      url: "https://www.google.com/?hl=es&safe=active&ssui=on",
+      date: "02/10/2023",
+      url: "https://github.com/CH0CL0/Eco1",
     },
     {
-      title: "Proyecto 4",
-      description: "NASHEI",
+      title: "Challenge",
+      description: "descripcion",
       imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk39xK56uiRJKkNYBSLPCVi2O1VeOsJsBFYA&usqp=CAU",
-      date: "30/02/1997",
-      url: "https://www.google.com/?hl=es&safe=active&ssui=on",
+      date: "07/11/2023",
+      url: "https://github.com/MateoGuevaraAlvarez/Challenge-react-native",
     },
 
     // Agrega más proyectos según sea necesario
