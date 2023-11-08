@@ -1,10 +1,11 @@
 import React from 'react';
 import { Badge } from "@mui/material";
 import './Inicio.css';
-import { FavoritosContext } from '../../context/favoritoscontext';
+import { ProjectContext } from "../../context/ProjectContext.jsx";
 
 const Navbar = () => {
-  const { favoritos } = React.useContext(FavoritosContext);
+  const { projects } = React.useContext(ProjectContext);
+  const favoritos = projects.filter((project) => project.favorito);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">

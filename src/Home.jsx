@@ -1,76 +1,58 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Container, Row, Col, Card, Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Bookmark } from "react-bootstrap-icons";
 import { BookmarkFill } from "react-bootstrap-icons";
-import { faStar } from "@fortawesome/free-solid-svg-icons"; // Importa los iconos que necesitas
-import "./Choclias.css";
+import { ProjectContext } from "../context/ProjectContext.jsx";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { FavoritosContext } from '../context/favoritoscontext.jsx';
-import LoginForm from "./components/Login.jsx";
 
 const Choclias = () => {
-  const { favoritos, setFavoritos } = React.useContext(FavoritosContext)
-  const proyectosIniciales = [
-    {
-      title: "To do list",
-      description: "Puedes crear y sincronizar fácilmente tus listas de tareas entre varios dispositivos para tenerlas disponibles desde una computadora",
-      imageUrl: "",
-      date: "31/08/20203",
-      url: "https://github.com/CH0CL0/TODOLISTDAI",
-    },
-    {
-      title: "Eco 1%",
-      description: "Una pagina donde puedes competir con tus amigos para quien sabe mas sobre la contaminacion",
-      imageUrl: "https://tusclicks.com/blog/wp-content/uploads/2019/10/hero-design-web.jpg",
-      date: "02/10/2023",
-      url: "https://github.com/CH0CL0/Eco1",
-    },
-    {
-      title: "Challenge",
-      description: "descripcion",
-      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk39xK56uiRJKkNYBSLPCVi2O1VeOsJsBFYA&usqp=CAU",
-      date: "07/11/2023",
-      url: "https://github.com/MateoGuevaraAlvarez/Challenge-react-native",
-    },
-
-    // Agrega más proyectos según sea necesario
-  ];
-  const [projects, setProjects] = useState(proyectosIniciales);
-  const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { projects, sesionIniciada, setProjects } = useContext(ProjectContext);
+  const [user, setUser] = useState(localStorage.getItem("user") || null);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = (email, password) => {
     setUser(email);
-    setIsLoggedIn(true);
-  };
-  const handleLogout = () => {
-    setUser(null);
-    setIsLoggedIn(false);
+    localStorage.setItem("user", email);
+    handleCloseLoginModal();
   };
 
   const handleAgregarFavorito = (project) => {
-    // Asegúrate de que el usuario esté autenticado antes de agregar a favoritos
     if (user) {
-      setFavoritos([...favoritos, project]);
+      const updatedProjects = [...projects];
+      const projectIndex = updatedProjects.findIndex((p) => p.title === project.title);
+
+      if (projectIndex !== -1) {
+        if (updatedProjects[projectIndex].favorito) {
+          updatedProjects[projectIndex].favorito = false;
+        } else {
+          updatedProjects[projectIndex].favorito = true;
+        }
+
+        setProjects(updatedProjects);
+        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+      }
     } else {
       alert('Debes iniciar sesión para agregar a favoritos.');
     }
   };
 
-
-
-
-  useEffect(() => {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-  }, [favoritos]);
-
   const isFavorito = (project) => {
-    console.log(favoritos)
-    return favoritos.includes(project);
+    return project.favorito;
   };
+
+  const handleShowLoginModal = () => {
+    setShowLoginModal(true);
+  };
+
+  const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+  };
+
   return (
     <div>
       <Navbar />
@@ -90,7 +72,7 @@ const Choclias = () => {
                   </a>
                   {isFavorito(project) ? (
                     <BookmarkFill
-                      fill="black" // Puedes ajustar el color de relleno
+                      fill="black"
                       className="star-icon favorito"
                       onClick={() => handleAgregarFavorito(project)}
                     />
@@ -110,10 +92,37 @@ const Choclias = () => {
         {user ? (
           <p className="welcome-message">Hola, {user} | <button className="logout-button" onClick={() => setUser(null)}>Cerrar Sesión</button></p>
         ) : (
-          <LoginForm onLogin={handleLogin} />
+          <Button variant="primary" onClick={handleShowLoginModal}>
+            Iniciar Sesión
+          </Button>
         )}
       </div>
       <Footer />
+      <Modal show={showLoginModal} onHide={handleCloseLoginModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Iniciar Sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseLoginModal}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={() => handleLogin(email, password)}>
+            Iniciar Sesión
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
